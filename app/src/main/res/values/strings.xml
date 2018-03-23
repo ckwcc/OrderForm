@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">OrderForm</string>
+
+    <string name="toolbar_title">toolbar</string>
+    <string name="toolbar_subtitle">subtitle</string>
+
+    <string name="should_print">是否印刷</string>
+
+    <string name="customer_name">客户名称：%s</string>
+    <string name="classify">种类：%s</string>
+    <string name="number">数量：%s</string>
+    <string name="unit_price">单价：%s</string>
+    <string name="layer">层数：%s</string>
+    <string name="box_size">箱尺寸：%s</string>
+    <string name="plank_size">板尺寸：%s</string>
+    <string name="line_size">压线尺寸：%s</string>
+    <string name="is_print">是否印刷：%s</string>
+    <string name="configuration">配置：%s</string>
+    <string name="print_content">印刷内容：%s</string>
+    <string name="priotity">优先级：%s</string>
+    <string name="state">状态：%s</string>
+</resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--字体大小-->
+    <dimen name="font_normal">14sp</dimen>
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="font_big">20sp</dimen>
+
+    <!-- 通用的 -->
+    <dimen name="common_margin_left">16dp</dimen>
+    <dimen name="common_margin_right">16dp</dimen>
+    <dimen name="common_padding_top">8dp</dimen>
+    <dimen name="common_padding_bottom">8dp</dimen>
+    <dimen name="common_view_height">1dp</dimen>
+    <dimen name="mine_fragment_bottom_sheet_item_height">48dp</dimen>
+    <dimen name="circle_image_view_size">76dp</dimen>
+
+    <dimen name="post_media_height">200dp</dimen>
+
+</resources>
