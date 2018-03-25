@@ -291,22 +291,35 @@
             android:layout_marginEnd="@dimen/common_padding_top"
             android:background="@color/colorWhite"
             android:layout_width="match_parent"
-            android:layout_height="55dp">
+            android:layout_height="110dp">
 
             <TextView
                 android:id="@+id/tv_priority"
                 android:text="订单优先级："
-                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/common_margin_left"
                 android:layout_marginLeft="@dimen/common_margin_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/tv_reset_priority"
+                android:text="重置优先级"
+                android:gravity="center"
+                android:background="@color/colorButton"
+                android:layout_below="@+id/tv_priority"
+                android:paddingLeft="@dimen/common_padding_top"
+                android:paddingRight="@dimen/common_padding_top"
+                android:layout_marginTop="@dimen/common_margin_left"
+                android:layout_marginLeft="@dimen/common_margin_left"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"/>
+
             <LinearLayout
                 android:id="@+id/ll_star_container"
+                android:layout_marginTop="@dimen/common_margin_left"
                 android:layout_toRightOf="@+id/tv_priority"
                 android:layout_marginRight="@dimen/common_margin_left"
                 android:layout_marginLeft="@dimen/common_margin_left"
-                android:layout_centerVertical="true"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -317,7 +330,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="20dp" />
+                    android:layout_height="25dp" />
 
                 <ImageView
                     android:id="@+id/iv_star_two"
@@ -325,7 +338,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="20dp" />
+                    android:layout_height="25dp" />
 
                 <ImageView
                     android:id="@+id/iv_star_three"
@@ -333,7 +346,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="20dp" />
+                    android:layout_height="25dp" />
 
                 <ImageView
                     android:id="@+id/iv_star_four"
@@ -341,7 +354,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="20dp" />
+                    android:layout_height="25dp" />
 
                 <ImageView
                     android:id="@+id/iv_star_five"
@@ -349,7 +362,61 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="20dp" />
+                    android:layout_height="25dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_sun_container"
+                android:layout_below="@+id/ll_star_container"
+                android:layout_toRightOf="@+id/tv_priority"
+                android:layout_marginTop="@dimen/common_margin_left"
+                android:layout_marginRight="@dimen/common_margin_left"
+                android:layout_marginLeft="@dimen/common_margin_left"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_sun_one"
+                    android:src="@mipmap/ic_sun_unchecked"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="30dp" />
+
+                <ImageView
+                    android:id="@+id/iv_sun_two"
+                    android:src="@mipmap/ic_sun_unchecked"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="30dp" />
+
+                <ImageView
+                    android:id="@+id/iv_sun_three"
+                    android:src="@mipmap/ic_sun_unchecked"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="30dp" />
+
+                <ImageView
+                    android:id="@+id/iv_sun_four"
+                    android:src="@mipmap/ic_sun_unchecked"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="30dp" />
+
+                <ImageView
+                    android:id="@+id/iv_sun_five"
+                    android:src="@mipmap/ic_sun_unchecked"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="30dp" />
 
             </LinearLayout>
 

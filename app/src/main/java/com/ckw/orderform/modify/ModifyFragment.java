@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ckw.orderform.R;
@@ -61,11 +62,18 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
 
     @BindView(R.id.ll_star_container)
     LinearLayout mStarContainer;
+    @BindView(R.id.ll_sun_container)
+    LinearLayout mSunContainer;
+    @BindView(R.id.tv_reset_priority)
+    TextView mResetPriority;
 
     private OrderBean mOrderBean;
 
     private boolean mShouldPrint;//记录是否需要打印
     private int mPriority;
+    private int mStarPriority = 0;
+    private int mSunPriority = 0;
+
 
     public static ModifyFragment newInstance(OrderBean orderBean) {
 
@@ -109,6 +117,7 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
     @Override
     protected void initListener() {
         setStarLight();
+        setSunLight();
         mSpinnerPrint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -135,6 +144,17 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
                 }
             }
         });
+
+        mResetPriority.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setSunUnLight();
+                setStarUnLight();
+                mSunPriority = 0;
+                mStarPriority = 0;
+                mPriority = 0;
+            }
+        });
     }
 
     private void initView(){
@@ -147,14 +167,99 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
         mEtPlankSize.setText(mOrderBean.getSizeBan());//板尺寸
         mEtLineSize.setText(mOrderBean.getSizeYa());//压线尺寸
         mEtConfiguration.setText(mOrderBean.getPeizhi());//配置
+        Log.d("flag", "----------------->initView: 是否印刷；" +mOrderBean.getIsYinshua());
         if(mOrderBean.getIsYinshua() == 1){
             mSpinnerPrint.setSelection(1);
+            mDoPrintContainer.setVisibility(View.VISIBLE);
             mEtDoPrint.setText(mOrderBean.getYinshuaText());//打印的内容
         }else {
             mSpinnerPrint.setSelection(0);
             mDoPrintContainer.setVisibility(View.GONE);
         }
+        initPriority();
 
+    }
+
+    private void initPriority(){
+        int priotity = mOrderBean.getPriority();
+
+        mSunPriority = priotity / 10;
+        mStarPriority = priotity % 10;
+
+        ImageView starOne = (ImageView)mStarContainer.findViewById(R.id.iv_star_one);
+        ImageView starTwo = (ImageView)mStarContainer.findViewById(R.id.iv_star_two);
+        ImageView starThree = (ImageView)mStarContainer.findViewById(R.id.iv_star_three);
+        ImageView starFour = (ImageView)mStarContainer.findViewById(R.id.iv_star_four);
+        ImageView starFive = (ImageView)mStarContainer.findViewById(R.id.iv_star_five);
+        ImageView sunOne = mSunContainer.findViewById(R.id.iv_sun_one);
+        ImageView sunTwo = mSunContainer.findViewById(R.id.iv_sun_two);
+        ImageView sunThree = mSunContainer.findViewById(R.id.iv_sun_three);
+        ImageView sunFour = mSunContainer.findViewById(R.id.iv_sun_four);
+        ImageView sunFive = mSunContainer.findViewById(R.id.iv_sun_five);
+        setIconLight(mStarPriority,starOne,starTwo,starThree,starFour,starFive,R.mipmap.ic_score_checked,R.mipmap.ic_score_unchecked);
+        setIconLight(mSunPriority,sunOne,sunTwo,sunThree,sunFour,sunFive,R.mipmap.ic_sun_checked,R.mipmap.ic_sun_unchecked);
+    }
+
+    private void setIconLight(int priority,ImageView one,ImageView two,ImageView three,ImageView four,ImageView five,int checkId,int unCheckId){
+        switch (priority){
+            case 5:
+                one.setImageResource(checkId);
+                two.setImageResource(checkId);
+                three.setImageResource(checkId);
+                four.setImageResource(checkId);
+                five.setImageResource(checkId);
+                break;
+            case 4:
+                one.setImageResource(checkId);
+                two.setImageResource(checkId);
+                three.setImageResource(checkId);
+                four.setImageResource(checkId);
+                five.setImageResource(unCheckId);
+                break;
+            case 3:
+                one.setImageResource(checkId);
+                two.setImageResource(checkId);
+                three.setImageResource(checkId);
+                four.setImageResource(unCheckId);
+                five.setImageResource(unCheckId);
+                break;
+            case 2:
+                one.setImageResource(checkId);
+                two.setImageResource(checkId);
+                three.setImageResource(unCheckId);
+                four.setImageResource(unCheckId);
+                five.setImageResource(unCheckId);
+                break;
+            case 1:
+                one.setImageResource(checkId);
+                two.setImageResource(unCheckId);
+                three.setImageResource(unCheckId);
+                four.setImageResource(unCheckId);
+                five.setImageResource(unCheckId);
+                break;
+            case 0:
+                one.setImageResource(unCheckId);
+                two.setImageResource(unCheckId);
+                three.setImageResource(unCheckId);
+                four.setImageResource(unCheckId);
+                five.setImageResource(unCheckId);
+                break;
+
+        }
+    }
+
+    private void setStarUnLight(){
+        ImageView starOne = (ImageView)mStarContainer.findViewById(R.id.iv_star_one);
+        ImageView starTwo = (ImageView)mStarContainer.findViewById(R.id.iv_star_two);
+        ImageView starThree = (ImageView)mStarContainer.findViewById(R.id.iv_star_three);
+        ImageView starFour = (ImageView)mStarContainer.findViewById(R.id.iv_star_four);
+        ImageView starFive = (ImageView)mStarContainer.findViewById(R.id.iv_star_five);
+
+        starOne.setImageResource(R.mipmap.ic_score_unchecked);
+        starTwo.setImageResource(R.mipmap.ic_score_unchecked);
+        starThree.setImageResource(R.mipmap.ic_score_unchecked);
+        starFour.setImageResource(R.mipmap.ic_score_unchecked);
+        starFive.setImageResource(R.mipmap.ic_score_unchecked);
     }
 
     private void setStarLight(){
@@ -172,7 +277,7 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
                 starThree.setImageResource(R.mipmap.ic_score_unchecked);
                 starFour.setImageResource(R.mipmap.ic_score_unchecked);
                 starFive.setImageResource(R.mipmap.ic_score_unchecked);
-                mPriority = 1;
+                mStarPriority = 1;
             }
         });
         starTwo.setOnClickListener(new View.OnClickListener() {
@@ -183,7 +288,7 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
                 starThree.setImageResource(R.mipmap.ic_score_unchecked);
                 starFour.setImageResource(R.mipmap.ic_score_unchecked);
                 starFive.setImageResource(R.mipmap.ic_score_unchecked);
-                mPriority = 2;
+                mStarPriority = 2;
 
             }
         });
@@ -196,7 +301,7 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
                 starThree.setImageResource(R.mipmap.ic_score_checked);
                 starFour.setImageResource(R.mipmap.ic_score_unchecked);
                 starFive.setImageResource(R.mipmap.ic_score_unchecked);
-                mPriority = 3;
+                mStarPriority = 3;
 
             }
         });
@@ -209,7 +314,7 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
                 starThree.setImageResource(R.mipmap.ic_score_checked);
                 starFour.setImageResource(R.mipmap.ic_score_checked);
                 starFive.setImageResource(R.mipmap.ic_score_unchecked);
-                mPriority = 4;
+                mStarPriority = 4;
 
             }
         });
@@ -222,7 +327,7 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
                 starThree.setImageResource(R.mipmap.ic_score_checked);
                 starFour.setImageResource(R.mipmap.ic_score_checked);
                 starFive.setImageResource(R.mipmap.ic_score_checked);
-                mPriority = 5;
+                mStarPriority = 5;
 
             }
         });
@@ -323,13 +428,98 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
         }
         //未完成
         orderBean.setState(0);
-
+        mPriority = mSunPriority * 10 + mStarPriority;
         orderBean.setPriority(mPriority);
 
         Gson gson = new Gson();
         String toJson = gson.toJson(orderBean);
         Log.d("----", "addOrderParams: 测试数据："+toJson);
         mPresenter.updateOrder(toJson);
+    }
+
+    private void setSunUnLight(){
+        ImageView sunOne = mSunContainer.findViewById(R.id.iv_sun_one);
+        ImageView sunTwo = mSunContainer.findViewById(R.id.iv_sun_two);
+        ImageView sunThree = mSunContainer.findViewById(R.id.iv_sun_three);
+        ImageView sunFour = mSunContainer.findViewById(R.id.iv_sun_four);
+        ImageView sunFive = mSunContainer.findViewById(R.id.iv_sun_five);
+
+        sunOne.setImageResource(R.mipmap.ic_sun_unchecked);
+        sunTwo.setImageResource(R.mipmap.ic_sun_unchecked);
+        sunThree.setImageResource(R.mipmap.ic_sun_unchecked);
+        sunFour.setImageResource(R.mipmap.ic_sun_unchecked);
+        sunFive.setImageResource(R.mipmap.ic_sun_unchecked);
+    }
+
+    private void setSunLight(){
+        final ImageView sunOne = mSunContainer.findViewById(R.id.iv_sun_one);
+        final ImageView sunTwo = mSunContainer.findViewById(R.id.iv_sun_two);
+        final ImageView sunThree = mSunContainer.findViewById(R.id.iv_sun_three);
+        final ImageView sunFour = mSunContainer.findViewById(R.id.iv_sun_four);
+        final ImageView sunFive = mSunContainer.findViewById(R.id.iv_sun_five);
+
+        sunOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sunOne.setImageResource(R.mipmap.ic_sun_checked);
+                sunTwo.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunThree.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunFour.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunFive.setImageResource(R.mipmap.ic_sun_unchecked);
+                mSunPriority = 1;
+            }
+        });
+        sunTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sunOne.setImageResource(R.mipmap.ic_sun_checked);
+                sunTwo.setImageResource(R.mipmap.ic_sun_checked);
+                sunThree.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunFour.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunFive.setImageResource(R.mipmap.ic_sun_unchecked);
+                mSunPriority = 2;
+
+            }
+        });
+
+        sunThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sunOne.setImageResource(R.mipmap.ic_sun_checked);
+                sunTwo.setImageResource(R.mipmap.ic_sun_checked);
+                sunThree.setImageResource(R.mipmap.ic_sun_checked);
+                sunFour.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunFive.setImageResource(R.mipmap.ic_sun_unchecked);
+                mSunPriority = 3;
+
+            }
+        });
+
+        sunFour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sunOne.setImageResource(R.mipmap.ic_sun_checked);
+                sunTwo.setImageResource(R.mipmap.ic_sun_checked);
+                sunThree.setImageResource(R.mipmap.ic_sun_checked);
+                sunFour.setImageResource(R.mipmap.ic_sun_checked);
+                sunFive.setImageResource(R.mipmap.ic_sun_unchecked);
+                mSunPriority = 4;
+
+            }
+        });
+
+        sunFive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sunOne.setImageResource(R.mipmap.ic_sun_checked);
+                sunTwo.setImageResource(R.mipmap.ic_sun_checked);
+                sunThree.setImageResource(R.mipmap.ic_sun_checked);
+                sunFour.setImageResource(R.mipmap.ic_sun_checked);
+                sunFive.setImageResource(R.mipmap.ic_sun_checked);
+                mSunPriority = 5;
+
+            }
+        });
     }
 
 }

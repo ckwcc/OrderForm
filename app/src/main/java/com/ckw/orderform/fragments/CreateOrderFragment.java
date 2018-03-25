@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ckw.orderform.R;
@@ -19,8 +20,6 @@ import com.ckw.orderform.presenter.OrderPresenter;
 import com.ckw.orderform.repository.OrderBean;
 import com.ckw.orderform.repository.OrderListBean;
 import com.google.gson.Gson;
-
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -80,9 +79,15 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
 
     @BindView(R.id.ll_star_container)
     LinearLayout mStarContainer;
+    @BindView(R.id.ll_sun_container)
+    LinearLayout mSunContainer;
+    @BindView(R.id.tv_reset_priority)
+    TextView mResetPriority;
 
     private boolean mShouldPrint;//记录是否需要打印
     private int mPriority;
+    private int mStarPriotity;
+    private int mSunPriotity;
 
 
     @Override
@@ -119,6 +124,7 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
     @Override
     protected void initListener() {
         setStarLight();
+        setSunLight();
         mSpinnerPrint.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -144,6 +150,17 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
                 if(checkOrderParams()){
                     addOrderParams();
                 }
+            }
+        });
+
+        mResetPriority.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setSunUnLight();
+                setStarUnLight();
+                mSunPriotity = 0;
+                mStarPriotity = 0;
+                mPriority = 0;
             }
         });
     }
@@ -188,7 +205,10 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
         mShouldPrint = false;
         mSpinnerPrint.setSelection(0);
         mPriority = 0;
+        mStarPriotity = 0;
+        mSunPriotity = 0;
         setStarUnLight();
+        setSunUnLight();
     }
 
     private void addOrderParams(){
@@ -202,7 +222,7 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
         orderBean.setSizeBan(mEtPlankSize.getText().toString().trim());
         orderBean.setSizeYa(mEtLineSize.getText().toString().trim());
         orderBean.setPeizhi(mEtConfiguration.getText().toString().trim());
-        if(mShouldPrint){
+        if(!mShouldPrint){
             orderBean.setIsYinshua(0);
         }else {
             orderBean.setIsYinshua(1);
@@ -211,11 +231,13 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
         //未完成
         orderBean.setState(0);
 
+        mPriority = mSunPriotity * 10 + mStarPriotity;
         Log.d("----", "addOrderParams: 优先级："+mPriority);
         orderBean.setPriority(mPriority);
 
         Gson gson = new Gson();
         String toJson = gson.toJson(orderBean);
+        Log.d("flag", "----------------->addOrderParams: 上传的数据：" +toJson);
         mPresenter.addOrder(toJson);
     }
 
@@ -297,6 +319,20 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
         starFive.setImageResource(R.mipmap.ic_score_unchecked);
     }
 
+    private void setSunUnLight(){
+        ImageView sunOne = mSunContainer.findViewById(R.id.iv_sun_one);
+        ImageView sunTwo = mSunContainer.findViewById(R.id.iv_sun_two);
+        ImageView sunThree = mSunContainer.findViewById(R.id.iv_sun_three);
+        ImageView sunFour = mSunContainer.findViewById(R.id.iv_sun_four);
+        ImageView sunFive = mSunContainer.findViewById(R.id.iv_sun_five);
+
+        sunOne.setImageResource(R.mipmap.ic_sun_unchecked);
+        sunTwo.setImageResource(R.mipmap.ic_sun_unchecked);
+        sunThree.setImageResource(R.mipmap.ic_sun_unchecked);
+        sunFour.setImageResource(R.mipmap.ic_sun_unchecked);
+        sunFive.setImageResource(R.mipmap.ic_sun_unchecked);
+    }
+
     private void setStarLight(){
         final ImageView starOne = (ImageView)mStarContainer.findViewById(R.id.iv_star_one);
         final ImageView starTwo = (ImageView)mStarContainer.findViewById(R.id.iv_star_two);
@@ -312,7 +348,7 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
                 starThree.setImageResource(R.mipmap.ic_score_unchecked);
                 starFour.setImageResource(R.mipmap.ic_score_unchecked);
                 starFive.setImageResource(R.mipmap.ic_score_unchecked);
-                mPriority = 1;
+                mStarPriotity = 1;
             }
         });
         starTwo.setOnClickListener(new View.OnClickListener() {
@@ -323,7 +359,7 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
                 starThree.setImageResource(R.mipmap.ic_score_unchecked);
                 starFour.setImageResource(R.mipmap.ic_score_unchecked);
                 starFive.setImageResource(R.mipmap.ic_score_unchecked);
-                mPriority = 2;
+                mStarPriotity = 2;
 
             }
         });
@@ -336,7 +372,7 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
                 starThree.setImageResource(R.mipmap.ic_score_checked);
                 starFour.setImageResource(R.mipmap.ic_score_unchecked);
                 starFive.setImageResource(R.mipmap.ic_score_unchecked);
-                mPriority = 3;
+                mStarPriotity = 3;
 
             }
         });
@@ -349,7 +385,7 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
                 starThree.setImageResource(R.mipmap.ic_score_checked);
                 starFour.setImageResource(R.mipmap.ic_score_checked);
                 starFive.setImageResource(R.mipmap.ic_score_unchecked);
-                mPriority = 4;
+                mStarPriotity = 4;
 
             }
         });
@@ -362,7 +398,78 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
                 starThree.setImageResource(R.mipmap.ic_score_checked);
                 starFour.setImageResource(R.mipmap.ic_score_checked);
                 starFive.setImageResource(R.mipmap.ic_score_checked);
-                mPriority = 5;
+                mStarPriotity = 5;
+
+            }
+        });
+    }
+
+    private void setSunLight(){
+        final ImageView sunOne = mSunContainer.findViewById(R.id.iv_sun_one);
+        final ImageView sunTwo = mSunContainer.findViewById(R.id.iv_sun_two);
+        final ImageView sunThree = mSunContainer.findViewById(R.id.iv_sun_three);
+        final ImageView sunFour = mSunContainer.findViewById(R.id.iv_sun_four);
+        final ImageView sunFive = mSunContainer.findViewById(R.id.iv_sun_five);
+
+        sunOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sunOne.setImageResource(R.mipmap.ic_sun_checked);
+                sunTwo.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunThree.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunFour.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunFive.setImageResource(R.mipmap.ic_sun_unchecked);
+                mSunPriotity = 1;
+            }
+        });
+        sunTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sunOne.setImageResource(R.mipmap.ic_sun_checked);
+                sunTwo.setImageResource(R.mipmap.ic_sun_checked);
+                sunThree.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunFour.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunFive.setImageResource(R.mipmap.ic_sun_unchecked);
+                mSunPriotity = 2;
+
+            }
+        });
+
+        sunThree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sunOne.setImageResource(R.mipmap.ic_sun_checked);
+                sunTwo.setImageResource(R.mipmap.ic_sun_checked);
+                sunThree.setImageResource(R.mipmap.ic_sun_checked);
+                sunFour.setImageResource(R.mipmap.ic_sun_unchecked);
+                sunFive.setImageResource(R.mipmap.ic_sun_unchecked);
+                mSunPriotity = 3;
+
+            }
+        });
+
+        sunFour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sunOne.setImageResource(R.mipmap.ic_sun_checked);
+                sunTwo.setImageResource(R.mipmap.ic_sun_checked);
+                sunThree.setImageResource(R.mipmap.ic_sun_checked);
+                sunFour.setImageResource(R.mipmap.ic_sun_checked);
+                sunFive.setImageResource(R.mipmap.ic_sun_unchecked);
+                mSunPriotity = 4;
+
+            }
+        });
+
+        sunFive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sunOne.setImageResource(R.mipmap.ic_sun_checked);
+                sunTwo.setImageResource(R.mipmap.ic_sun_checked);
+                sunThree.setImageResource(R.mipmap.ic_sun_checked);
+                sunFour.setImageResource(R.mipmap.ic_sun_checked);
+                sunFive.setImageResource(R.mipmap.ic_sun_checked);
+                mSunPriotity = 5;
 
             }
         });

@@ -25,6 +25,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
 
+    private FragmentAdapter mAdapter;
+
     @Inject
     CreateOrderFragment mCreateOrderFragment;
 
@@ -63,8 +65,8 @@ public class MainActivity extends BaseActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(mCreateOrderFragment);
         fragments.add(mOrderListFragment);
-
-        mViewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), fragments, arrTabTitles));
+        mAdapter = new FragmentAdapter(getSupportFragmentManager(), fragments, arrTabTitles);
+        mViewPager.setAdapter(mAdapter);
     }
 
     private void initTabLayout() {

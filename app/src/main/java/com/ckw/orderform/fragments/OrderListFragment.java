@@ -2,11 +2,8 @@ package com.ckw.orderform.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,17 +20,14 @@ import com.ckw.orderform.repository.OrderBean;
 import com.ckw.orderform.repository.OrderListBean;
 import com.ckw.orderform.repository.StateBean;
 import com.ckw.orderform.search.SearchActivity;
-import com.github.clans.fab.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import scut.carson_ho.searchview.ICallBack;
 
 /**
  * Created by ckw
@@ -61,8 +55,8 @@ public class OrderListFragment extends BaseFragment implements OrderContract.Vie
     @Inject
     OrderPresenter mPresenter;
 
-    @BindView(R.id.fab)
-    FloatingActionButton mFab;
+//    @BindView(R.id.fab)
+//    FloatingActionButton mFab;
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -95,6 +89,15 @@ public class OrderListFragment extends BaseFragment implements OrderContract.Vie
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            Log.d("flag", "----------------->setUserVisibleHint: 用户可见");
+            mPresenter.getAllOrderList();
+        }
+    }
+
+    @Override
     protected void operateViews(View view) {
         initRecyclerView();
     }
@@ -109,12 +112,12 @@ public class OrderListFragment extends BaseFragment implements OrderContract.Vie
             }
         });
 
-        mFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.getAllOrderList();
-            }
-        });
+//        mFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mPresenter.getAllOrderList();
+//            }
+//        });
     }
 
 
@@ -127,13 +130,16 @@ public class OrderListFragment extends BaseFragment implements OrderContract.Vie
                 StateBean stateBean = new StateBean();
                 stateBean.setState(1);
                 String transToJson = transStateToJson(stateBean);
-                Log.d("----", "onActivityResult: orderBean:"+transToJson);
+                mPresenter.getSearchOrderList(transToJson);
+            }else if ("0".equals(mSearchStr)){
+                StateBean stateBean = new StateBean();
+                stateBean.setState(0);
+                String transToJson = transStateToJson(stateBean);
                 mPresenter.getSearchOrderList(transToJson);
             }else {
                 StateBean stateBean = new StateBean();
                 stateBean.setCustomerName(mSearchStr);
                 String transToJson = transStateToJson(stateBean);
-                Log.d("----", "onActivityResult: orderBean:"+transToJson);
                 mPresenter.getSearchOrderList(transToJson);
             }
         }
