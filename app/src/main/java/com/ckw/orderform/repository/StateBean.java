@@ -15,6 +15,16 @@ public class StateBean {
 
     private String customerName;  //客户
 
+    private String sizeXiang;
+
+    public String getSizeXiang() {
+        return sizeXiang;
+    }
+
+    public void setSizeXiang(String sizeXiang) {
+        this.sizeXiang = sizeXiang;
+    }
+
     public String getCustomerName() {
         return customerName;
     }
@@ -36,6 +46,7 @@ public class StateBean {
         return "StateBean{" +
                 "state=" + state +
                 ", customerName='" + customerName + '\'' +
+                ", sizeXiang='" + sizeXiang + '\'' +
                 '}';
     }
 }

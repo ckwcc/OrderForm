@@ -70,11 +70,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.mState.setText(String.format(mContext.getResources().getString(R.string.state),String.valueOf(orderBean.getState())));
 
-        if(orderBean.getState() == 1){
-            holder.mConfirm.setText("已确认");
-            holder.mConfirm.setClickable(false);
+        if(orderBean.getState() != null){
+            if(orderBean.getState() == 1){
+                holder.mConfirm.setText("已确认");
+                holder.mConfirm.setClickable(false);
+            }
+        }else {
+            holder.mConfirm.setText("确认");
         }
-
 
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,13 +86,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         });
 
-        if(orderBean.getState() == 0){
-            holder.mConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mListener.onConfirmButtonClick(position,holder.mConfirm);
-                }
-            });
+        if(orderBean.getState() != null){
+            if(orderBean.getState() == 0){
+                holder.mConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mListener.onConfirmButtonClick(position,holder.mConfirm);
+                    }
+                });
+            }
         }
 
         holder.mFix.setOnClickListener(new View.OnClickListener() {

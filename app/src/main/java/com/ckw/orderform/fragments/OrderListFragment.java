@@ -126,22 +126,33 @@ public class OrderListFragment extends BaseFragment implements OrderContract.Vie
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1 && resultCode == 100){
             mSearchStr = data.getStringExtra("search");
-            if("1".equals(mSearchStr)){
+            if("2".equals(mSearchStr)){//未确认
+                StateBean stateBean = new StateBean();
+                stateBean.setState(2);
+                String transToJson = transStateToJson(stateBean);
+                Log.d("----", "onActivityResult: 搜索状态2"+transToJson);
+                mPresenter.getSearchOrderList(transToJson);
+            }else if ("1".equals(mSearchStr)){//已经确认
+                Log.d("----", "onActivityResult: 搜索状态1已经确认");
                 StateBean stateBean = new StateBean();
                 stateBean.setState(1);
                 String transToJson = transStateToJson(stateBean);
-                mPresenter.getSearchOrderList(transToJson);
-            }else if ("0".equals(mSearchStr)){
-                StateBean stateBean = new StateBean();
-                stateBean.setState(0);
-                String transToJson = transStateToJson(stateBean);
+                Log.d("----", "onActivityResult: 搜索状态1："+transToJson);
                 mPresenter.getSearchOrderList(transToJson);
             }else {
+                Log.d("----", "onActivityResult: 搜索客户");
                 StateBean stateBean = new StateBean();
                 stateBean.setCustomerName(mSearchStr);
                 String transToJson = transStateToJson(stateBean);
                 mPresenter.getSearchOrderList(transToJson);
             }
+        }else if(requestCode == 1 && resultCode ==101){
+            mSearchStr = data.getStringExtra("search");
+            StateBean stateBean = new StateBean();
+            stateBean.setSizeXiang(mSearchStr);
+            String transToJson = transStateToJson(stateBean);
+            Log.d("----", "onActivityResult: 搜索尺寸："+transToJson);
+            mPresenter.getSearchOrderList(transToJson);
         }
 
     }

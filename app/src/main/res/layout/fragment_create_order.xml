@@ -103,7 +103,6 @@
 
             <EditText
                 android:id="@+id/et_unit_price"
-                android:inputType="number"
                 android:layout_toEndOf="@+id/tv_unit_price"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

@@ -5,15 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/ll_search_container"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="55dp">
+
+        <Button
+            android:id="@+id/btn_mode_one"
+            android:text="客户名或者状态"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btn_mode_two"
+            android:text="搜索尺寸"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
     <scut.carson_ho.searchview.SearchView
-        android:id="@+id/search_view"
+        android:id="@+id/search_size"
+        app:layout_constraintTop_toBottomOf="@+id/ll_search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:textSizeSearch="5dp"
         app:textColorSearch="#3F51B5"
-        app:textHintSearch="输入客户名称查询订单或者输入数字1/0查询已确认/未确认订单"
+        app:textHintSearch="请输入尺寸搜索"
         app:searchBlockHeight="150"
         app:searchBlockColor="#ffffff"
         />
+
+    <scut.carson_ho.searchview.SearchView
+        android:id="@+id/search_view"
+        app:layout_constraintTop_toBottomOf="@+id/ll_search_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:textSizeSearch="5dp"
+        app:textColorSearch="#3F51B5"
+        app:textHintSearch="输入客户名称查询订单或者输入数字1/2来查询已确认/未确认订单"
+        app:searchBlockHeight="150"
+        app:searchBlockColor="#ffffff"
+        />
+
+
+
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>

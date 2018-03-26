@@ -229,7 +229,7 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
             orderBean.setYinshuaText(mEtDoPrint.getText().toString().trim());
         }
         //未完成
-        orderBean.setState(0);
+        orderBean.setState(2);
 
         mPriority = mSunPriotity * 10 + mStarPriotity;
         Log.d("----", "addOrderParams: 优先级："+mPriority);
