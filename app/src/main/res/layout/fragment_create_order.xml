@@ -211,7 +211,7 @@
             android:layout_marginEnd="@dimen/common_padding_top"
             android:background="@color/colorWhite"
             android:layout_width="match_parent"
-            android:layout_height="55dp">
+            android:layout_height="120dp">
 
             <TextView
                 android:id="@+id/tv_configuration"
@@ -223,6 +223,8 @@
 
             <EditText
                 android:id="@+id/et_configuration"
+                android:gravity="top|start"
+                android:textSize="20sp"
                 android:layout_toEndOf="@+id/tv_configuration"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

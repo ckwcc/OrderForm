@@ -68,12 +68,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         holder.mPriority.setText(String.format(mContext.getResources().getString(R.string.priotity),String.valueOf(orderBean.getPriority())));
 
-        holder.mState.setText(String.format(mContext.getResources().getString(R.string.state),String.valueOf(orderBean.getState())));
-
         if(orderBean.getState() != null){
             if(orderBean.getState() == 1){
+                holder.mState.setText(String.format(mContext.getResources().getString(R.string.state),"已确认"));
                 holder.mConfirm.setText("已确认");
                 holder.mConfirm.setClickable(false);
+            }else {
+                holder.mState.setText(String.format(mContext.getResources().getString(R.string.state),"未确认"));
+                holder.mConfirm.setText("确认");
             }
         }else {
             holder.mConfirm.setText("确认");
@@ -87,7 +89,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         });
 
         if(orderBean.getState() != null){
-            if(orderBean.getState() == 0){
+            if(orderBean.getState() == 2){//2是未确认
                 holder.mConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

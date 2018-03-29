@@ -6,7 +6,7 @@
     android:background="@color/colorWhite"
     android:layout_marginTop="@dimen/common_padding_top"
     android:layout_width="match_parent"
-    android:layout_height="280dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tv_customer_name"
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="客户名称:xxxxxxxxx"
+        tools:text="客户名称:xxxxxxxxx"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="种类：xxxxx"
+        tools:text="种类：xxxxx"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_customer_name" />
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="数量：xxxxxx"
+        tools:text="数量：xxxxxx"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_classify" />
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:text="单价：xxxxxxx"
+        tools:text="单价：xxxxxxx"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_number" />
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="层数:xxxxxxxx"
+        tools:text="层数:xxxxxxxx"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_unit_price" />
@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
-        android:text="箱尺寸：xxxxxxxxx"
+        tools:text="箱尺寸：xxxxxxxxx"
         android:textSize="14sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_classify"
         app:layout_constraintRight_toRightOf="parent"
@@ -79,7 +79,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
-        android:text="板尺寸：xxxxxxxxxxxx"
+        tools:text="板尺寸：xxxxxxxxxxxx"
         android:textSize="14sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_number"
         app:layout_constraintRight_toRightOf="parent"
@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
-        android:text="压线尺寸：xxxxxxxx"
+        tools:text="压线尺寸：xxxxxxxx"
         android:textSize="14sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_unit_price"
         app:layout_constraintRight_toRightOf="parent"
@@ -98,36 +98,40 @@
 
     <TextView
         android:id="@+id/tv_should_print"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:text="是否印刷：是"
+        tools:text="是否印刷：是"
+        app:layout_constraintTop_toTopOf="@+id/tv_print_content"
+        app:layout_constraintHorizontal_weight="1"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_layer" />
 
     <TextView
         android:id="@+id/tv_configuration"
-        android:layout_width="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tv_line_size"
+        android:layout_marginTop="@dimen/common_padding_top"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="16dp"
-        android:text="配置：xxxxxxxx"
-        android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_layer"
+        android:layout_marginEnd="16dp"
+        tools:text="配置：yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+        android:gravity="end"
+        android:textSize="13sp"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="125dp" />
+         />
 
     <TextView
         android:id="@+id/tv_print_content"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
-        android:text="印刷内容：xxxxxxxxxx"
-        android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_should_print"
+        tools:text="印刷内容：xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        android:layout_marginTop="@dimen/common_padding_top"
+        android:gravity="end"
+        android:textSize="13sp"
         app:layout_constraintRight_toRightOf="parent"
-        tools:layout_editor_absoluteY="152dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_configuration" />
 
     <Button
         android:id="@+id/btn_delete"
@@ -144,6 +148,8 @@
 
     <Button
         android:id="@+id/btn_confirm"
+        android:layout_marginTop="@dimen/common_padding_top"
+        app:layout_constraintTop_toBottomOf="@+id/tv_priority"
         android:layout_width="66dp"
         android:layout_height="40dp"
         android:layout_marginBottom="16dp"
@@ -183,10 +189,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"
-        android:text="优先级：xxx"
+        tools:text="优先级：xxx"
+        app:layout_constraintTop_toBottomOf="@+id/tv_print_content"
+        android:layout_marginTop="@dimen/common_padding_top"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_state"
-        tools:layout_editor_absoluteY="178dp" />
+        />
 
 
 </android.support.constraint.ConstraintLayout>

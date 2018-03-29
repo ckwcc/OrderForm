@@ -189,6 +189,7 @@ public class CreateOrderFragment extends BaseFragment implements OrderContract.V
     @Override
     public void showLoginFailure(String msg) {
         Log.d("----", "showLoginFailure: "+msg);
+        Toast.makeText(getContext(),"提交失败："+msg,Toast.LENGTH_SHORT).show();
     }
 
     private void initLayoutView(){

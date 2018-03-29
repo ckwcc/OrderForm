@@ -167,37 +167,42 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
         mEtPlankSize.setText(mOrderBean.getSizeBan());//板尺寸
         mEtLineSize.setText(mOrderBean.getSizeYa());//压线尺寸
         mEtConfiguration.setText(mOrderBean.getPeizhi());//配置
-        Log.d("flag", "----------------->initView: 是否印刷；" +mOrderBean.getIsYinshua());
-        if(mOrderBean.getIsYinshua() == 1){
-            mSpinnerPrint.setSelection(1);
-            mDoPrintContainer.setVisibility(View.VISIBLE);
-            mEtDoPrint.setText(mOrderBean.getYinshuaText());//打印的内容
-        }else {
-            mSpinnerPrint.setSelection(0);
-            mDoPrintContainer.setVisibility(View.GONE);
+        if(mOrderBean.getIsYinshua() != null){
+            if(mOrderBean.getIsYinshua() == 1){
+                mSpinnerPrint.setSelection(1);
+                mDoPrintContainer.setVisibility(View.VISIBLE);
+                mEtDoPrint.setText(mOrderBean.getYinshuaText());//打印的内容
+            }else {
+                mSpinnerPrint.setSelection(0);
+                mDoPrintContainer.setVisibility(View.GONE);
+            }
         }
+
         initPriority();
 
     }
 
     private void initPriority(){
-        int priotity = mOrderBean.getPriority();
+        if(mOrderBean.getPriority() != null){
+            int priotity = mOrderBean.getPriority();
 
-        mSunPriority = priotity / 10;
-        mStarPriority = priotity % 10;
+            mSunPriority = priotity / 10;
+            mStarPriority = priotity % 10;
 
-        ImageView starOne = (ImageView)mStarContainer.findViewById(R.id.iv_star_one);
-        ImageView starTwo = (ImageView)mStarContainer.findViewById(R.id.iv_star_two);
-        ImageView starThree = (ImageView)mStarContainer.findViewById(R.id.iv_star_three);
-        ImageView starFour = (ImageView)mStarContainer.findViewById(R.id.iv_star_four);
-        ImageView starFive = (ImageView)mStarContainer.findViewById(R.id.iv_star_five);
-        ImageView sunOne = mSunContainer.findViewById(R.id.iv_sun_one);
-        ImageView sunTwo = mSunContainer.findViewById(R.id.iv_sun_two);
-        ImageView sunThree = mSunContainer.findViewById(R.id.iv_sun_three);
-        ImageView sunFour = mSunContainer.findViewById(R.id.iv_sun_four);
-        ImageView sunFive = mSunContainer.findViewById(R.id.iv_sun_five);
-        setIconLight(mStarPriority,starOne,starTwo,starThree,starFour,starFive,R.mipmap.ic_score_checked,R.mipmap.ic_score_unchecked);
-        setIconLight(mSunPriority,sunOne,sunTwo,sunThree,sunFour,sunFive,R.mipmap.ic_sun_checked,R.mipmap.ic_sun_unchecked);
+            ImageView starOne = (ImageView)mStarContainer.findViewById(R.id.iv_star_one);
+            ImageView starTwo = (ImageView)mStarContainer.findViewById(R.id.iv_star_two);
+            ImageView starThree = (ImageView)mStarContainer.findViewById(R.id.iv_star_three);
+            ImageView starFour = (ImageView)mStarContainer.findViewById(R.id.iv_star_four);
+            ImageView starFive = (ImageView)mStarContainer.findViewById(R.id.iv_star_five);
+            ImageView sunOne = mSunContainer.findViewById(R.id.iv_sun_one);
+            ImageView sunTwo = mSunContainer.findViewById(R.id.iv_sun_two);
+            ImageView sunThree = mSunContainer.findViewById(R.id.iv_sun_three);
+            ImageView sunFour = mSunContainer.findViewById(R.id.iv_sun_four);
+            ImageView sunFive = mSunContainer.findViewById(R.id.iv_sun_five);
+            setIconLight(mStarPriority,starOne,starTwo,starThree,starFour,starFive,R.mipmap.ic_score_checked,R.mipmap.ic_score_unchecked);
+            setIconLight(mSunPriority,sunOne,sunTwo,sunThree,sunFour,sunFive,R.mipmap.ic_sun_checked,R.mipmap.ic_sun_unchecked);
+        }
+
     }
 
     private void setIconLight(int priority,ImageView one,ImageView two,ImageView three,ImageView four,ImageView five,int checkId,int unCheckId){
@@ -427,13 +432,12 @@ public class ModifyFragment extends BaseFragment implements ModifyContract.View{
             orderBean.setYinshuaText(mEtDoPrint.getText().toString().trim());
         }
         //未完成
-        orderBean.setState(0);
+        orderBean.setState(2);
         mPriority = mSunPriority * 10 + mStarPriority;
         orderBean.setPriority(mPriority);
 
         Gson gson = new Gson();
         String toJson = gson.toJson(orderBean);
-        Log.d("----", "addOrderParams: 测试数据："+toJson);
         mPresenter.updateOrder(toJson);
     }
 
